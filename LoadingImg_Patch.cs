@@ -25,9 +25,6 @@ namespace CustomLoadingScreens
 
         public static void Postfix(ref LoadingImg __instance)
         {
-
-
-            MelonLoader.MelonLogger.Msg(Settings.onlyCustomImages);
             if (!Settings.onlyCustomImages)
                 if (rand.NextDouble() > Settings.customImageProbability) return;
 
@@ -59,24 +56,13 @@ namespace CustomLoadingScreens
                 components = __instance.simpleIllus.GetComponents<Image>();
             }
 
-
-
-
-
             foreach (Image c in components)
             {
 
                 c.sprite = temp;
             }
 
-
-
         }
-
-
-
-
-
 
         public static bool is43(int x, int y)
         {
@@ -92,7 +78,9 @@ namespace CustomLoadingScreens
 
         public static void Postfix(ref LoadingTxt __instance)
         {
-            MelonLoader.MelonLogger.Msg(Settings.customText.Length);
+            return;
+            MelonLoader.MelonLogger.Msg("Start");
+            if (__instance.m_Txt == null) return;
             MelonLoader.MelonLogger.Msg(__instance.m_Txt.text);
             if (Settings.customText.Length == 0) return;
             __instance.m_Txt.text = Settings.customText[rand.Next(Settings.customText.Length)];

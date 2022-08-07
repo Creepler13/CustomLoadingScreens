@@ -29,9 +29,6 @@ namespace CustomLoadingScreens
                     Bitmap bm = new Bitmap(Imagepath);
                     Texture2D text = new Texture2D(bm.Width, bm.Height, TextureFormat.ARGB32, false);
 
-
-
-
                     for (int x = 0; x < bm.Width; x++)
                     {
                         for (int y = 0; y < bm.Height; y++)
@@ -40,8 +37,6 @@ namespace CustomLoadingScreens
                             text.SetPixel(x, y, new UnityEngine.Color32(c.R, c.G, c.B, c.A));
                         }
                     }
-
-
 
                     text.Apply();
                     TextureData textDat = new TextureData();
@@ -52,10 +47,9 @@ namespace CustomLoadingScreens
                     textures.Add(text);
                     Sprite s = Sprite.Create(text, new Rect(0, 0, text.width, text.height), new Vector2(0.5f, 0.5f));
 
-
                     images.Add(s);
 
-                    MelonLoader.MelonLogger.Msg("Loaded img " + Imagepath);
+                    //MelonLoader.MelonLogger.Msg("Loaded img " + Imagepath);
                 }
             }
 
@@ -70,24 +64,7 @@ namespace CustomLoadingScreens
         public Texture2D getRandomTexture()
         {
             return textures[rand.Next(textures.Count)];
-            /*  string path = "CustomLoadingScreens";
-            string[] images = Directory.GetFiles(path);
-            Bitmap bm = new Bitmap(images[rand.Next(images.Length)]);
-            Texture2D text = new Texture2D(bm.Width, bm.Height, TextureFormat.ARGB32, false);
 
-            for (int x = 0; x < bm.Width; x++)
-            {
-                for (int y = 0; y < bm.Height; y++)
-                {
-                    System.Drawing.Color c = bm.GetPixel(x, bm.Height - 1 - y);
-                    text.SetPixel(x, y, new UnityEngine.Color32(c.R, c.G, c.B, c.A));
-                }
-            }
-
-            text.Apply();
-
-            return text;
-        */
         }
 
     }
