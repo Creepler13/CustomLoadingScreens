@@ -12,7 +12,4 @@ Put images into to the CustomLoadingScreens folder(created after running game wi
 This mod is still WIP.
 
 Currently its best to only use images in 16:9, because others will be streched.
-
-There might be a chance, that the image will be rendered in 4:3, just ignore it im working on it.
-
   
