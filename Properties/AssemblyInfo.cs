@@ -16,7 +16,7 @@ using MelonLoader;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: MelonInfo(typeof(ModMain), "CustomLoadingScreens", "1.0.0", "Creepler13", null)]
+[assembly: MelonInfo(typeof(ModMain), "CustomLoadingScreens", "1.1.0", "Creepler13", null)]
 [assembly: MelonGame("PeroPeroGames", "MuseDash")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

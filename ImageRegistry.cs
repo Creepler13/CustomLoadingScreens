@@ -11,9 +11,9 @@ namespace CustomLoadingScreens
 {
     public class ImageRegistry
     {
-        internal List<TextureData> textData = new List<TextureData>();
-        internal List<Sprite> images = new List<Sprite>();
-        internal List<Texture2D> textures = new List<Texture2D>();
+        internal Dictionary<string, TextureData> textData = new Dictionary<string, TextureData>();
+        internal Dictionary<string, Sprite> images = new Dictionary<string, Sprite>();
+        internal Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
         private System.Random rand = new System.Random();
         public void load()
@@ -26,6 +26,8 @@ namespace CustomLoadingScreens
             {
                 if (File.Exists(Imagepath))
                 {
+                    string fileName = Path.GetFileName(Imagepath).Replace(".", "_");
+
                     Bitmap bm = new Bitmap(Imagepath);
                     Texture2D text = new Texture2D(bm.Width, bm.Height, TextureFormat.ARGB32, false);
 
@@ -43,29 +45,26 @@ namespace CustomLoadingScreens
                     textDat.rawData = text.GetRawTextureData();
                     textDat.width = text.width;
                     textDat.height = text.height;
-                    textData.Add(textDat);
-                    textures.Add(text);
+                    textData.Add(fileName, textDat);
+                    textures.Add(fileName, text);
                     Sprite s = Sprite.Create(text, new Rect(0, 0, text.width, text.height), new Vector2(0.5f, 0.5f));
 
-                    images.Add(s);
+                    images.Add(fileName, s);
+
+                    if (!Settings.customText.ContainsKey(fileName))
+                        Settings.customText.Add(fileName, "");
 
                     //MelonLoader.MelonLogger.Msg("Loaded img " + Imagepath);
                 }
+
+
             }
-
+            Settings.save();
 
 
         }
 
-        public Sprite getRandomSprite()
-        {
-            return images[rand.Next(images.Count)];
-        }
-        public Texture2D getRandomTexture()
-        {
-            return textures[rand.Next(textures.Count)];
 
-        }
 
     }
 }

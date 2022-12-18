@@ -10,6 +10,7 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Assets.Scripts.PeroTools.Managers;
 
 namespace CustomLoadingScreens
 {
@@ -28,7 +29,8 @@ namespace CustomLoadingScreens
             if (!Settings.onlyCustomImages)
                 if (rand.NextDouble() > Settings.customImageProbability) return;
 
-            TextureData dat = reg.textData[rand.Next(reg.textData.Count)];
+            string imageKey = reg.textData.Keys.ElementAt(rand.Next(reg.textData.Keys.Count));
+            TextureData dat = reg.textData[imageKey];
 
             Texture2D tempText = new Texture2D(dat.width, dat.height, TextureFormat.ARGB32, false);
             tempText.LoadRawTextureData(dat.rawData);
@@ -62,6 +64,20 @@ namespace CustomLoadingScreens
                 c.sprite = temp;
             }
 
+
+            foreach (Text Text in __instance.GetComponentsInChildren<Text>())
+            {
+
+
+
+                if (Settings.useCustomText && Settings.customText[imageKey] != "")
+                    Text.m_Text = Settings.customText[imageKey];
+                else if (Settings.useRandomText && Settings.randomText.Length != 0) Text.m_Text = Settings.randomText[rand.Next(Settings.randomText.Length)];
+
+            }
+
+
+
         }
 
         public static bool is43(int x, int y)
@@ -71,22 +87,7 @@ namespace CustomLoadingScreens
 
     }
 
-    [HarmonyPatch(typeof(LoadingTxt), "Start")]
-    internal class LoadingTxt_Patch
-    {
-        private static System.Random rand = new System.Random();
 
-        public static void Postfix(ref LoadingTxt __instance)
-        {
-            return;
-            MelonLoader.MelonLogger.Msg("Start");
-            if (__instance.m_Txt == null) return;
-            MelonLoader.MelonLogger.Msg(__instance.m_Txt.text);
-            if (Settings.customText.Length == 0) return;
-            __instance.m_Txt.text = Settings.customText[rand.Next(Settings.customText.Length)];
-        }
-
-    }
 
 
 }
