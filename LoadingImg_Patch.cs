@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Assets.Scripts.PeroTools.Managers;
+using Il2CppSystem.IO;
 
 namespace CustomLoadingScreens
 {
@@ -26,53 +27,59 @@ namespace CustomLoadingScreens
 
         public static void Postfix(ref LoadingImg __instance)
         {
+
+
             if (!Settings.onlyCustomImages)
                 if (rand.NextDouble() > Settings.customImageProbability) return;
 
             string imageKey = reg.textData.Keys.ElementAt(rand.Next(reg.textData.Keys.Count));
-            TextureData dat = reg.textData[imageKey];
+            MelonLoader.MelonLogger.Msg("adsd");
 
-            Texture2D tempText = new Texture2D(dat.width, dat.height, TextureFormat.ARGB32, false);
-            tempText.LoadRawTextureData(dat.rawData);
-            tempText.Apply();
-            Sprite temp = Sprite.Create(tempText, new Rect(0, 0, tempText.width, tempText.height), Vector2.zero);
-
-            __instance.simpleIllus.active = false;
-            __instance.specialIllus.active = false;
-            __instance.verySpecialIllus.active = false;
-            __instance.specialIllusfor43.active = false;
-
-            Il2CppArrayBase<Image> components = __instance.simpleIllus.GetComponents<Image>();
-            Il2CppArrayBase<Image> components43 = __instance.specialIllusfor43.GetComponents<Image>();
-
-            if (is43(tempText.width, tempText.height))
+            if (reg.textData.Count > 0)
             {
-                __instance.specialIllusfor43.active = true;
+                TextureData dat = reg.textData[imageKey];
 
-                components = __instance.specialIllusfor43.GetComponents<Image>();
+                Texture2D tempText = new Texture2D(dat.width, dat.height, TextureFormat.ARGB32, false);
+                tempText.LoadRawTextureData(dat.rawData);
+                tempText.Apply();
+                Sprite temp = Sprite.Create(tempText, new Rect(0, 0, tempText.width, tempText.height), Vector2.zero);
 
+                __instance.simpleIllus.active = false;
+                __instance.specialIllus.active = false;
+                __instance.verySpecialIllus.active = false;
+                __instance.specialIllusfor43.active = false;
+
+                Il2CppArrayBase<Image> components = __instance.simpleIllus.GetComponents<Image>();
+                Il2CppArrayBase<Image> components43 = __instance.specialIllusfor43.GetComponents<Image>();
+
+                if (is43(tempText.width, tempText.height))
+                {
+                    __instance.specialIllusfor43.active = true;
+
+                    components = __instance.specialIllusfor43.GetComponents<Image>();
+
+                }
+                else
+                {
+                    __instance.simpleIllus.active = true;
+                    components = __instance.simpleIllus.GetComponents<Image>();
+                }
+
+                foreach (Image c in components)
+                {
+
+                    c.sprite = temp;
+                }
             }
-            else
-            {
-                __instance.simpleIllus.active = true;
-                components = __instance.simpleIllus.GetComponents<Image>();
-            }
-
-            foreach (Image c in components)
-            {
-
-                c.sprite = temp;
-            }
-
-
+            MelonLoader.MelonLogger.Msg("adsd");
             foreach (Text Text in __instance.GetComponentsInChildren<Text>())
             {
-
-
-
-                if (Settings.useCustomText && Settings.customText[imageKey] != "")
-                    Text.m_Text = Settings.customText[imageKey];
-                else if (Settings.useRandomText && Settings.randomText.Length != 0) Text.m_Text = Settings.randomText[rand.Next(Settings.randomText.Length)];
+                MelonLoader.MelonLogger.Msg("adsd");
+                if (Settings.useCustomText)
+                    if (Settings.customText.ContainsKey(imageKey))
+                        if (Settings.customText[imageKey] != "")
+                            Text.m_Text = Settings.customText[imageKey];
+                        else if (Settings.useRandomText && Settings.randomText.Length != 0) Text.m_Text = Settings.randomText[rand.Next(Settings.randomText.Length)];
 
             }
 

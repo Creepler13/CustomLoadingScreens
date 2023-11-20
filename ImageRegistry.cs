@@ -9,16 +9,15 @@ using UnityEngine;
 
 namespace CustomLoadingScreens
 {
-    public class ImageRegistry
+    internal class ImageRegistry
     {
-        internal Dictionary<string, TextureData> textData = new Dictionary<string, TextureData>();
-        internal Dictionary<string, Sprite> images = new Dictionary<string, Sprite>();
-        internal Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        public Dictionary<string, TextureData> textData = new Dictionary<string, TextureData>();
+        public Dictionary<string, Sprite> images = new Dictionary<string, Sprite>();
+        public Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
         private System.Random rand = new System.Random();
-        public void load()
+        public void load(String path)
         {
-            string path = "CustomLoadingScreens";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -50,10 +49,9 @@ namespace CustomLoadingScreens
                     Sprite s = Sprite.Create(text, new Rect(0, 0, text.width, text.height), new Vector2(0.5f, 0.5f));
 
                     images.Add(fileName, s);
-
-                    if (!Settings.customText.ContainsKey(fileName))
-                        Settings.customText.Add(fileName, "");
-
+                    if (path == ModMain.CustomLoadingScreenPath)
+                        if (!Settings.customText.ContainsKey(fileName))
+                            Settings.customText.Add(fileName, "");
                     //MelonLoader.MelonLogger.Msg("Loaded img " + Imagepath);
                 }
 

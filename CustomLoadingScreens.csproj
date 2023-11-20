@@ -37,6 +37,10 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\Steam\steamapps\common\Muse Dash\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=2.0.0.668, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Steam\steamapps\common\Muse Dash\MelonLoader\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="Il2Cppmscorlib, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Steam\steamapps\common\Muse Dash\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
@@ -90,6 +94,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomBackgrounds\ChangeableTexture.cs" />
+    <Compile Include="CustomBackgrounds\HomeScreenPatch.cs" />
+    <Compile Include="CustomBackgrounds\PnlMenuPatch.cs" />
+    <Compile Include="CustomBackgrounds\PnlStagePatch.cs" />
     <Compile Include="LocalLoadingTipsInfo_Patch.cs" />
     <Compile Include="ModMain.cs" />
     <Compile Include="Settings.cs" />
